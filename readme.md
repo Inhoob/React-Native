@@ -140,3 +140,10 @@ app.json 파일에서 "backgroundColor":"#cccccc" 적용하면 됨
 ## 상태바 조작(StatusBar)
 
 상단바 조작 시 StatusBar import하고 style을 auto,light,dark 등등 조절
+
+## 디버깅
+
+1. 터미널 에러메시지
+2. console.log
+3. 터미널에서 m 눌러서 에뮬레이터의 메뉴 토글(여기서 remote JS 메뉴토글 가능) -> 근데 불안정한 듯 하다
+4. react-devtools 설치 후 터미널에 react-devtools 치고 에뮬레이터에서 remote JS 메뉴토글(state를 볼 때 유용)
