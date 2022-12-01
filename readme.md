@@ -126,3 +126,17 @@ function addGoalHandler() {
 
 Modal이 제공하는 컴포넌트들을 잘 이용해서 애니메이션 만들기
 properties = visible,animationType
+
+## Image 파일
+
+```javascript
+<Image source={require("상대경로")} />
+```
+
+## 모든 배경화면 색상 적용
+
+app.json 파일에서 "backgroundColor":"#cccccc" 적용하면 됨
+
+## 상태바 조작(StatusBar)
+
+상단바 조작 시 StatusBar import하고 style을 auto,light,dark 등등 조절
