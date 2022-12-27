@@ -90,6 +90,9 @@ keyExtractor={(item, index) => item.id}
 안드로이드 물결효과 android_ripple={{color:'#dddddd'}}
 눌렸을 때 스타일 지정하는 방법
 
+Pressable Component의 style은 style객체를 담을 수도 있고 화살표함수를 통해 press이벤트마다
+객체를 발생시킬 수 있다. pressed는 정해진 이름임
+
 ```javascript
 style={({ pressed }) => pressed && styles.pressedItem}
 
@@ -147,3 +150,29 @@ app.json 파일에서 "backgroundColor":"#cccccc" 적용하면 됨
 2. console.log
 3. 터미널에서 m 눌러서 에뮬레이터의 메뉴 토글(여기서 remote JS 메뉴토글 가능) -> 근데 불안정한 듯 하다
 4. react-devtools 설치 후 터미널에 react-devtools 치고 에뮬레이터에서 remote JS 메뉴토글(state를 볼 때 유용)
+
+## shadow 추가하는 법
+
+elevation property 사용(0,1,2,3) => android
+shadow properties => ios
+
+## 유저경험을 위한 몇가지 textInput property
+
+autoCapitalize="none"
+autoCorrect={false}
+
+## Style 관련 잘 처리가 안될 때
+
+외부 컨테이너와 내부 컨테이너를 나눠서 작업
+Section4/components/PrimaryButton 예시를 확인할 것
+
+## 그래디언트 설정(gradient)
+
+expo lineargradient
+
+## background-image
+
+ImageBackground 컴포넌트 사용
+이 때 resizeMode,source 설정
+background-image를 react-native github 페이지에서 components를 뜯어보면 image와 view의 조합임
+이 view의 style은 imageStyle이라는 property를 이용해서 투명도 등 설정 가능
