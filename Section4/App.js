@@ -18,10 +18,7 @@ export default function App() {
   }
 
   return (
-    <LinearGradient
-      colors={["#ddb52f", "#4e0429", "#20D173"]}
-      style={styles.rootScreen}
-    >
+    <LinearGradient colors={["#4e0429", "#ddb52f"]} style={styles.rootScreen}>
       <ImageBackground
         source={require("./assets/dices.jpeg")}
         resizeMode="cover"
