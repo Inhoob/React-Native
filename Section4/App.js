@@ -47,7 +47,7 @@ export default function App() {
       style={styles.rootScreen}
     >
       <ImageBackground
-        source={require("./assets/dices.jpeg")}
+        source={require("./assets/images/dices.jpeg")}
         resizeMode="cover"
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
