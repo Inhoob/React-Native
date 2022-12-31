@@ -84,6 +84,8 @@ API에서 가져와서 key property가 없을 때에는(대신 id가 있을 때)
 keyExtractor={(item, index) => item.id}
 ```
 
+_FlatList에서 중요한것은 때때로 기기의 맨 아래로 스크롤이 안되는 것 처럼 보일 때가 있다는 것이다. 이 스크롤 문제를 해결하려면 FlatList 주의에 컨테이너를 감싸주는 것이다. FlatList는 마치 무한한 공간을 차지하는 것 처럼 행동하는데 그렇기 때문에 이 공간에 style로 flex:1 의 값을 준다던가 하는 방식으로 제어해야 한다._
+
 ## Pressable Component
 
 누르는 액션을 등록하려면 Pressable로 감싸줘야함. 이 때 style을 주면 좋다
@@ -176,3 +178,18 @@ ImageBackground 컴포넌트 사용
 이 때 resizeMode,source 설정
 background-image를 react-native github 페이지에서 components를 뜯어보면 image와 view의 조합임
 이 view의 style은 imageStyle이라는 property를 이용해서 투명도 등 설정 가능
+
+## style의 중첩
+
+react-native는 CSS와는 다르게 계단식 스타일도 없고 상속도 없다. 하지만 유사한 동작을 하게 만들 수 있는데 만약
+내가 컴포넌트를 사용할 때 스타일을 추가해서 사용하려면 style property를 넣는다.
+
+```
+function InsructionText({children,style}){
+  return <Text style={[styles.instructionText, style]}>
+}
+```
+
+## 원을 만드는 법
+
+width,height를 동일하게 설정해 정사각형을 만들고 borderRadius를 그 절반의 길이로 하면 됨
