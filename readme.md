@@ -223,3 +223,12 @@ const marginTopDistance = height < 380 ? 30 : 100
 //...
 </View>
 ```
+
+4. 키패드에 의해 가려지는부분 => KeyboardAvoidingView 으로 기존의 앱을 덮어준다.(ios만 적용)
+   이 때 중요한 것은 KeyboardAvoidingView의 style에 flex:1 을 이용해서 최대크기로 만들어주는 것이고
+   이 것의 동작으로 'position'을 적용하면 ScrollView로 또 다시 덮어줘야한다.
+
+```
+  <ScrollView>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+```
