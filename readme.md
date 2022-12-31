@@ -204,3 +204,22 @@ const deviceWidth = Dimensions.get("window").width;
 // ...
 padding: deviceWidth < 380 ? 12 : 24
 ```
+
+3. 가로,세로 변경 요소
+
+> 우선 가로로 기울였을 때 변하지 않는다면 그것은 app.json 설정이 'oriemntation' : 'portrait'으로 설정되어있기 때문이다. landscape는 가로고정, default는 잠금해제
+
+만약 어플을 사용중에 기기를 돌린다? 만약 Dimension 관련 변수설정을 컴포넌트 밖에 두고 기기를 돌렸을 때 중단점을 지나더라도 padding이 변하지 않는다. 왜냐하면 컴포넌트 밖의 변수는 다시 설정되는것이 아니다. 다시 만약 사용중에 어플을 돌리는 기능을 하려면 Dimensions API를 사용하지 않는 것이 좋다. 대신 component 내에서 문제를 해결해야 한다.
+
+`useWindowDimensions` hook을 사용하자. 컴포넌트 내에서 선언해주면 된다.
+
+```
+const {width,height} = useWindowDimensions();
+// ...
+
+const marginTopDistance = height < 380 ? 30 : 100
+
+<View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
+//...
+</View>
+```
