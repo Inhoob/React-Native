@@ -193,3 +193,14 @@ function InsructionText({children,style}){
 ## 원을 만드는 법
 
 width,height를 동일하게 설정해 정사각형을 만들고 borderRadius를 그 절반의 길이로 하면 됨
+
+## 플랫폼 & 기기 크기에 맞추기(UI 개선,반응형)
+
+1. max-width
+2. Dimensions(screen=상태표시줄을 포함한 너비,높이 / window = 상태표시줄을 제외한 너비,높이)
+
+```
+const deviceWidth = Dimensions.get("window").width;
+// ...
+padding: deviceWidth < 380 ? 12 : 24
+```
