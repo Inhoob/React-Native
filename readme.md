@@ -232,3 +232,24 @@ const marginTopDistance = height < 380 ? 30 : 100
   <ScrollView>
       <KeyboardAvoidingView style={styles.screen} behavior="position">
 ```
+
+## 플랫폼에 따른 코드작성
+
+1. Platform API 활용
+
+```
+//Title.js
+const styles = StyleSheet.create({
+  title: {
+
+    borderWidth: Platform.OS==='android' ? 2 : 0,
+    // 또는
+    borderWidth:Platform.select({ios:0,android:2}),
+  },
+});
+```
+
+2. 파일을 따로 작성
+
+파일명을 Title.android.js 로 바꿔준다. 단, 이 때 import를 제대로 수정해줘야한다.
+import Title from '../components/ui/Title.android 로 되어있을 수 있는데 .android를 지워줄 것.
