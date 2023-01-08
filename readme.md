@@ -42,6 +42,7 @@ npx create-expo-app my-app
 - ScrollView를 사용해야 함
 - ScrollView를 보면 ios에서만 사용 가능한 옵션도 있고 android에서만 사용 가능한 옵션도 있다.
 - 하지만 ScrollView는 한번에 렌더링한다는 단점이 있음(성능저하) 분량이 정해진 것은 괜찮지만 리스트가 끝없이 늘어나는 주제에는 좋지 않다. => FlatList를 쓰면 보이는 부분만 렌더링 한다
+- 갯수가 고정되어있다면 FlatList를 굳이 쓰지 않아도 좋음
 
 ```javascript
 <ScrollView>
@@ -158,6 +159,8 @@ app.json 파일에서 "backgroundColor":"#cccccc" 적용하면 됨
 elevation property 사용(0,1,2,3) => android
 shadow properties => ios
 
+> 참고로 ios에서 shadow는 backgroundcolor를 적용해야 보인다.
+
 ## 유저경험을 위한 몇가지 textInput property
 
 autoCapitalize="none"
@@ -253,3 +256,22 @@ const styles = StyleSheet.create({
 
 파일명을 Title.android.js 로 바꿔준다. 단, 이 때 import를 제대로 수정해줘야한다.
 import Title from '../components/ui/Title.android 로 되어있을 수 있는데 .android를 지워줄 것.
+
+## Navigation 이란?
+
+모바일에선 url이 아닌 버튼을 눌러서 다른 화면으로 이동하거나 이전화면으로 돌아가는 것을 Navigation이라고 한다.
+
+Navigation은 ReactNative에서 제공하는 도구를 통해 화면 컴포넌트에서 설정한다. 화면에 바인딩 된 컴포넌트(Stack.Screen으로 설정된)는 navigtion이라는 property를 갖는다.
+
+```
+function CategoriesScreen({navigation}) {
+  return (
+    <FlatList
+      data={CATEGORIES}
+      keyExtractor={(item) => item.id}
+      renderItem={renderCategoryItem}
+      numColumns="2"
+    ></FlatList>
+  );
+}
+```
