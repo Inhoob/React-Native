@@ -11,7 +11,7 @@ export default function App() {
   const [userNumber, setUserNumber] = useState();
   const [gameIsOver, setGameIsOver] = useState(true);
   const [guessRounds, setGuessRounds] = useState(0);
-
+  // git 잘 동작하는지 추가
   const [fontsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
