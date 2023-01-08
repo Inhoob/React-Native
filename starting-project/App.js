@@ -12,7 +12,14 @@ export default function App() {
       {/* <SafeAreaView> */}
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            title: "All Categories",
+            headerStyle: { backgroundColor: "#351401" },
+            headerTintColor: "#cccccc",
+            contentStyle: { backgroundColor: "#3f2f25" },
+          }}
+        >
           <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
         </Stack.Navigator>
