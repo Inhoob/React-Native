@@ -161,6 +161,14 @@ shadow properties => ios
 
 > 참고로 ios에서 shadow는 backgroundcolor를 적용해야 보인다.
 
+만약 그림자가 잘 보이지 않을 때는 style을
+
+```
+overflow: Platform.OS === "android" ? "hidden" : "visible",
+```
+
+위와 같이 적용해주면 잘 보인다.
+
 ## 유저경험을 위한 몇가지 textInput property
 
 autoCapitalize="none"
@@ -262,6 +270,7 @@ import Title from '../components/ui/Title.android 로 되어있을 수 있는데
 모바일에선 url이 아닌 버튼을 눌러서 다른 화면으로 이동하거나 이전화면으로 돌아가는 것을 Navigation이라고 한다.
 
 Navigation은 ReactNative에서 제공하는 도구를 통해 화면 컴포넌트에서 설정한다. 화면에 바인딩 된 컴포넌트(Stack.Screen으로 설정된)는 navigtion이라는 property를 갖는다.
+보통 useNavigation을 쓰긴한다.
 
 ```
 function CategoriesScreen({navigation}) {
@@ -275,3 +284,37 @@ function CategoriesScreen({navigation}) {
   );
 }
 ```
+
+만약 name과 다른 header 명을 쓰고싶으면 options 프로퍼티를 이용하자. navigation API를 잘 찾아볼 것
+
+```
+<NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="MealsCategories"
+            component={CategoriesScreen}
+            options={{
+              title: "All Categories",
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "#cccccc",
+              contentStyle: { backgroundColor: "#3f2f25" },
+            }}
+          />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+        </Stack.Navigator>
+```
+
+만약 동적으로 title을 바꾸고싶다? MealsOverviewScreen 컴포넌트 참조.
+
+```
+useEffect(() => {
+    const categoryTitle = CATEGORIES.find(
+      (category) => category.id === catId
+    ).title;
+    navigation.setOptions({
+      title: categoryTitle,
+    });
+  }, [catId, navigation]);
+```
+
+하지만 이렇게하면 useEffect의 효과에 의해 컴포넌트가 렌더링 된 후에 title이 바뀌는 것을 확인할 수 있는데 useLayoutEffect를 이용하면 애니메이션이 실행되는 동안 side effect를 사용할 수 있다.
