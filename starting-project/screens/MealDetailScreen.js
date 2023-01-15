@@ -11,19 +11,24 @@ import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummy-data";
 import SubTitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import IconButton from "../components/IconButton";
 function MealDetailScreen({ route, navigation }) {
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
   function headerButtonPressHandler() {
-    console.log("Pressed!");
+    console.log("Pressed");
   }
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
-          <Button title="Tab me!" onPress={headerButtonPressHandler}></Button>
+          <IconButton
+            icon="star"
+            color="white"
+            onPress={headerButtonPressHandler}
+          />
         );
       },
     });
