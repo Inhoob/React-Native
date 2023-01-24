@@ -318,3 +318,60 @@ useEffect(() => {
 ```
 
 하지만 이렇게하면 useEffect의 효과에 의해 컴포넌트가 렌더링 된 후에 title이 바뀌는 것을 확인할 수 있는데 useLayoutEffect를 이용하면 애니메이션이 실행되는 동안 side effect를 사용할 수 있다.
+
+## Context
+
+```
+function FavoritesContextProvider({ children }) {
+  const [favoriteMealIds, setFavoriteMealIds] = useState([]);
+  function addFavorite(id) {
+    setFavoriteMealIds((currentFavIds) => [...currentFavIds, id]);
+  }
+  function removeFavorite(id) {
+    setFavoriteMealIds((currentFavIds) =>
+      currentFavIds.filter((mealId) => mealId !== id)
+    );
+  }
+  const value = {
+    ids: favoriteMealIds,
+    addFavorite: addFavorite,
+    removeFavorite: removeFavorite,
+  };
+  return (
+    <FavoritesContext.Provider value={value}>
+      {children}
+    </FavoritesContext.Provider>
+  );
+}
+```
+
+간단하게 만드는 ContextProvider. 이것을 실제 컴포넌트에 적용하면
+
+```
+import { useContext, useLayoutEffect } from "react";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+
+import IconButton from "../components/IconButton";
+import List from "../components/MealDetail/List";
+import Subtitle from "../components/MealDetail/Subtitle";
+import MealDetails from "../components/MealDetails";
+import { MEALS } from "../data/dummy-data";
+import { FavoritesContext } from "../store/context/favorites-context";
+
+function MealDetailScreen({ route, navigation }) {
+  const favoriteMealsCtx = useContext(FavoritesContext);
+  const mealId = route.params.mealId;
+
+  const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+  const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
+
+  function changeFavoriteStatusHandler() {
+    if (mealIsFavorite) {
+      favoriteMealsCtx.removeFavorite(mealId);
+    } else {
+      favoriteMealsCtx.addFavorite(mealId);
+    }
+  }
+}
+```
