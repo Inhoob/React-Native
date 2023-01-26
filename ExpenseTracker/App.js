@@ -8,11 +8,13 @@ import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
 import { Ionicons } from "@expo/vector-icons";
 import IconButton from "./UI/IconButton";
-
+import { useNavigation } from "@react-navigation/native";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpenseOverview() {
+  const navigation = useNavigation();
+
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -22,7 +24,14 @@ function ExpenseOverview() {
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
         headerRight: ({ tintColor }) => {
           //headerRight는 tintColor를 인자로 똑같이 받을 수 있다
-          return <IconButton icon="add" size={24} color={tintColor} />;
+          return (
+            <IconButton
+              icon="add"
+              size={24}
+              color={tintColor}
+              onPress={() => navigation.navigate("ManageExpense")}
+            />
+          );
         },
       }}
     >
