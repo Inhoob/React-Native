@@ -412,3 +412,15 @@ export default function App() {
   );
 }
 ```
+
+## Navigation에서의 Presentation
+
+```
+<Stack.Screen
+  name="ManageExpense"
+  component={ManageExpense}
+  options={{ presentation: "modal" }}
+/>
+```
+
+이런 식으로 설정하면 화면 전환 시 modal 처럼 나타난다. modal 외에도 여러가지 옵션이 있음.
