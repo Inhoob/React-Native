@@ -7,6 +7,7 @@ import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
 import { Ionicons } from "@expo/vector-icons";
+import IconButton from "./UI/IconButton";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -19,6 +20,10 @@ function ExpenseOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({ tintColor }) => {
+          //headerRight는 tintColor를 인자로 똑같이 받을 수 있다
+          return <IconButton icon="add" size={24} color={tintColor} />;
+        },
       }}
     >
       <BottomTabs.Screen
