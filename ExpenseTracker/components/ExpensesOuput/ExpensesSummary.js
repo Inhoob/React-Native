@@ -4,7 +4,7 @@ function ExpensesSummary({ expenses, periodName }) {
   const expensesSum = expenses.reduce((sum, expense) => {
     return sum + expense.amount;
   }, 0);
-  console.log(expensesSum);
+
   return (
     <View style={styles.container}>
       <Text style={styles.period}>{periodName}</Text>
