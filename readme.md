@@ -424,3 +424,30 @@ export default function App() {
 ```
 
 이런 식으로 설정하면 화면 전환 시 modal 처럼 나타난다. modal 외에도 여러가지 옵션이 있음.
+
+## Navigation에서 내가 온 화면을 동적으로 아는 방법 : 라우트 매개변수 설정
+
+```
+function expensePressHandler() {
+    navigation.navigate("ManageExpense", {
+      expenseId: id,
+    });
+  }
+```
+
+이런 식으로 navigate의 두 번째 인자로 expenseId를 설정해두고, route를 전달인자로 받으면 됨
+
+```
+function ManageExpense({ route, navigation }) {
+  const editedExpenseId = route.params?.expenseId;
+  const isEditing = !!editedExpenseId;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: isEditing ? "Edit Expense" : "Add Expense",
+    });
+  }, [navigation, isEditing]);
+
+  return <Text>ManageExpense Screen</Text>;
+}
+```
