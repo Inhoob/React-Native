@@ -6,7 +6,11 @@ function AllExpenses() {
   const expensesCtx = useContext(ExpensesContext);
 
   return (
-    <ExpensesOutput expensesPeriod="TOTAL" expenses={expensesCtx.expenses} />
+    <ExpensesOutput
+      expensesPeriod="TOTAL"
+      expenses={expensesCtx.expenses}
+      fallbackText="No expenses registered"
+    />
   );
 }
 
