@@ -475,3 +475,8 @@ function Button({ children, onPress, mode, style }) {
 ## modal을 닫는법
 
 그냥 navigation.goBack()을 사용하면 뒤로 가진다. 안드로이드는 기본적으로 뒤로가기 버튼이 있다.
+
+## useReducer에 관해서
+
+expenses-context를 확인.
+useReducer는 복잡한 시나리오가 있는 상태관리를 하는 경우 용이하다. action만 추가하고 dispatch 함수만 자식 컴포넌트로 전해주는 경우 상태가 용이하다.
