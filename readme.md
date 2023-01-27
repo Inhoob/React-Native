@@ -451,3 +451,23 @@ function ManageExpense({ route, navigation }) {
   return <Text>ManageExpense Screen</Text>;
 }
 ```
+
+## 다양하게 커스텀가능한 버튼 컴포넌트 예시
+
+```
+function Button({ children, onPress, mode, style }) {
+  return (
+    <View style={style}>
+      <Pressable onPress={onPress}>
+        <View style={[styles.button, (mode === "flat") & styles.flat]}>
+          <Text style={[styles.buttonText, mode === "flat" && styles.flatText]}>
+            {children}
+          </Text>
+        </View>
+      </Pressable>
+    </View>
+  );
+}
+```
+
+위와 같이 style을 같이 넣어주면 다양하게 커스텀 가능하다. mode를 통해 flat일 경우 중첩 스타일 적용도 가능
