@@ -471,3 +471,7 @@ function Button({ children, onPress, mode, style }) {
 ```
 
 위와 같이 style을 같이 넣어주면 다양하게 커스텀 가능하다. mode를 통해 flat일 경우 중첩 스타일 적용도 가능
+
+## modal을 닫는법
+
+그냥 navigation.goBack()을 사용하면 뒤로 가진다. 안드로이드는 기본적으로 뒤로가기 버튼이 있다.
