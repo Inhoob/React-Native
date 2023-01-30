@@ -1,21 +1,51 @@
 import { useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Alert } from "react-native";
 import Input from "./Input";
 import Button from "../../UI/Button";
 import { getFormattedDate } from "../../util/date";
 function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [inputValues, setInputValues] = useState({
-    amount: defaultValues ? defaultValues.amount.toString() : "",
-    date: defaultValues ? getFormattedDate(defaultValues.date) : "",
-    description: defaultValues ? defaultValues.description : "",
+    amount: {
+      value: defaultValues ? defaultValues.amount.toString() : "",
+      isValid: true,
+    },
+    date: {
+      value: defaultValues ? getFormattedDate(defaultValues.date) : "",
+      isValid: true,
+    },
+    description: {
+      value: defaultValues ? defaultValues.description : "",
+      isValid: true,
+    },
   });
 
   function submitHandler() {
     const expenseData = {
-      amount: +inputValues.amount, //+를 사용하면 숫자가 된다.
-      date: new Date(inputValues.date),
-      description: inputValues.description,
+      amount: +inputValues.amount.value, //+를 사용하면 숫자가 된다.
+      date: new Date(inputValues.date.value),
+      description: inputValues.description.value,
     };
+
+    const amountIsValid = expenseData.amount > 0 && !isNaN(expenseData.amount);
+    const dateIsValid = expenseData.date.toString() !== "Invalid Date";
+    const descriptionIsValid = expenseData.description.trim().length > 0;
+
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
+      setInputValues((curInputValues) => {
+        return {
+          amount: {
+            value: curInputValues.amount.value,
+            isValid: amountIsValid,
+          },
+          date: { value: curInputValues.date.value, isValid: dateIsValid },
+          description: {
+            value: curInputValues.description.value,
+            isValid: descriptionIsValid,
+          },
+        };
+      });
+      return;
+    }
 
     onSubmit(expenseData);
   }
@@ -24,10 +54,15 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
     setInputValues((curInputValues) => {
       return {
         ...curInputValues,
-        [inputIdentifier]: enteredValue, //property의 동적 설정
+        [inputIdentifier]: { value: enteredValue, isValid: true }, //property의 동적 설정
       };
     });
   }
+
+  const formIsInvalid =
+    !inputValues.amount.isValid ||
+    !inputValues.date.isValid ||
+    !inputValues.description.isValid;
 
   return (
     <View style={styles.form}>
@@ -39,7 +74,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "amount"), //두 번째 인수(enteredValue)는 react-native에서 알아서 처리한다는데 잘 모르겠음..
-            value: inputValues.amount, //이렇게 value:amountValue로 양방향 바인딩을 해야 reset 버튼 등으로 리셋 가능.
+            value: inputValues.amount.value, //이렇게 value:amountValue로 양방향 바인딩을 해야 reset 버튼 등으로 리셋 가능.
           }}
         />
         <Input
@@ -49,7 +84,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
             onChangeText: inputChangeHandler.bind(this, "date"),
-            value: inputValues.date,
+            value: inputValues.date.value,
           }}
         />
       </View>
@@ -63,6 +98,9 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
           value: inputValues.description,
         }}
       />
+      {formIsInvalid && (
+        <Text>Invalid Input Values - please check your entered data!</Text>
+      )}
       <View style={styles.buttons}>
         <Button mode="flat" onPress={onCancel} style={styles.button}>
           Cancel
