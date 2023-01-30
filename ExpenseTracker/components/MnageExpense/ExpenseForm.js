@@ -9,7 +9,15 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
     description: "",
   });
 
-  function submitHandler() {}
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputValues.amount, //+를 사용하면 숫자가 된다.
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
+  }
 
   function inputChangeHandler(inputIdentifier, enteredValue) {
     setInputValues((curInputValues) => {
@@ -39,7 +47,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
-            onChangeText: () => {},
+            onChangeText: inputChangeHandler.bind(this, "date"),
           }}
         />
       </View>
@@ -49,6 +57,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel }) {
           multiline: true,
           autoCorrect: false,
           autoCapitalize: "none",
+          onChangeText: inputChangeHandler.bind(this, "description"),
         }}
       />
       <View style={styles.buttons}>
