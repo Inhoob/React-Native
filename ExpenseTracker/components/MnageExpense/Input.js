@@ -1,6 +1,6 @@
 import { Text, TextInput, View } from "react-native";
 
-function ManageExpenseForm({ label, textInputConfig }) {
+function Input({ label, textInputConfig }) {
   return (
     <View>
       <Text>{label}</Text>
@@ -8,4 +8,4 @@ function ManageExpenseForm({ label, textInputConfig }) {
     </View>
   );
 }
-export default ManageExpenseForm;
+export default Input;

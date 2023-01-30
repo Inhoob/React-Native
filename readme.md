@@ -480,3 +480,8 @@ function Button({ children, onPress, mode, style }) {
 
 expenses-context를 확인.
 useReducer는 복잡한 시나리오가 있는 상태관리를 하는 경우 용이하다. action만 추가하고 dispatch 함수만 자식 컴포넌트로 전해주는 경우 상태가 용이하다.
+
+## 입력 양식(TextInputConfig)
+
+textInputConfig는 작성할 때 공식문서의 textInputConfig를 보면서 필요한 property가 있는지 찾아볼 것
+그리고 그 중에 항상 체크해야 하는 중요한 property는 autoCorrect,autoCapitalize 등이 있다.
