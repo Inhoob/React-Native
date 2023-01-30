@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, Alert } from "react-native";
 import Input from "./Input";
 import Button from "../../UI/Button";
 import { getFormattedDate } from "../../util/date";
+import GlobalStyles from "../../constants/styles";
 function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
   const [inputValues, setInputValues] = useState({
     amount: {
@@ -71,6 +72,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
         <Input
           style={styles.rowInput}
           label="Amount"
+          invalid={!inputValues.amount.isValid}
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangeHandler.bind(this, "amount"), //두 번째 인수(enteredValue)는 react-native에서 알아서 처리한다는데 잘 모르겠음..
@@ -80,6 +82,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
         <Input
           style={styles.rowInput}
           label="Date"
+          invalid={!inputValues.date.isValid}
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
@@ -90,6 +93,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
       </View>
       <Input
         label="Description"
+        invalid={!inputValues.description.isValid}
         textInputConfig={{
           multiline: true,
           autoCorrect: false,
@@ -99,7 +103,9 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
         }}
       />
       {formIsInvalid && (
-        <Text>Invalid Input Values - please check your entered data!</Text>
+        <Text style={styles.errorText}>
+          Invalid Input Values - please check your entered data!
+        </Text>
       )}
       <View style={styles.buttons}>
         <Button mode="flat" onPress={onCancel} style={styles.button}>
@@ -140,5 +146,10 @@ const styles = StyleSheet.create({
   button: {
     minWidth: 120,
     marginHorizontal: 8,
+  },
+  errorText: {
+    textAlign: "center",
+    color: GlobalStyles.colors.error500,
+    margin: 8,
   },
 });
