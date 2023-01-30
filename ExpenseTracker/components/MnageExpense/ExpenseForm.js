@@ -1,8 +1,22 @@
+import { useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import Input from "./Input";
 
 function ExpenseForm() {
-  function amountChangedHandler() {}
+  const [inputValues, setInputValues] = useState({
+    amount: "",
+    date: "",
+    description: "",
+  });
+
+  function inputChangeHandler(inputIdentifier, enteredValue) {
+    setInputValues((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredValue, //property의 동적 설정
+      };
+    });
+  }
 
   return (
     <View style={styles.form}>
@@ -13,7 +27,8 @@ function ExpenseForm() {
           label="Amount"
           textInputConfig={{
             keyboardType: "decimal-pad",
-            onChangeText: amountChangedHandler,
+            onChangeText: inputChangeHandler.bind(this, "amount"), //두 번째 인수(enteredValue)는 react-native에서 알아서 처리한다는데 잘 모르겠음..
+            value: inputValues.amount, //이렇게 value:amountValue로 양방향 바인딩을 해야 reset 버튼 등으로 리셋 가능.
           }}
         />
         <Input

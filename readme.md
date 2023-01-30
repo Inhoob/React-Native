@@ -490,7 +490,7 @@ textInputConfig는 작성할 때 공식문서의 textInputConfig를 보면서 �
 만약 custom Input의 multiline인 경우 style을 따로 적용하고 싶다면
 
 ```
-//Input.js
+// ExpenseTracker - Input.js
 const inputStyles = [styles.input];
   if (textInputConfig && textInputConfig.multiline) {
     inputStyles.push(styles.inputMultiline);
@@ -498,3 +498,6 @@ const inputStyles = [styles.input];
 ```
 
 위와 같이 적용하면 된다.
+
+input 컴포넌트의 property로 value:amountValue 등으로 양방향바인딩을 해야 reset 등으로 초기화 할 수 있다.
+그 밖에 입력 양식(form) 에 관한 것은 ExpenseTracker의 ExpenseForm.js 컴포넌트 참조.
