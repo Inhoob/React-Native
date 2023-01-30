@@ -485,3 +485,16 @@ useReducer는 복잡한 시나리오가 있는 상태관리를 하는 경우 용
 
 textInputConfig는 작성할 때 공식문서의 textInputConfig를 보면서 필요한 property가 있는지 찾아볼 것
 그리고 그 중에 항상 체크해야 하는 중요한 property는 autoCorrect,autoCapitalize 등이 있다.
+이 때 textAlignVertical은 양쪽 platform에서 다 적용된다.
+
+만약 custom Input의 multiline인 경우 style을 따로 적용하고 싶다면
+
+```
+//Input.js
+const inputStyles = [styles.input];
+  if (textInputConfig && textInputConfig.multiline) {
+    inputStyles.push(styles.inputMultiline);
+  }
+```
+
+위와 같이 적용하면 된다.
