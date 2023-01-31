@@ -99,7 +99,7 @@ function ExpenseForm({ onCancel, onSubmit, submitButtonLabel, defaultValues }) {
           autoCorrect: false,
           autoCapitalize: "none",
           onChangeText: inputChangeHandler.bind(this, "description"),
-          value: inputValues.description,
+          value: inputValues.description.value,
         }}
       />
       {formIsInvalid && (

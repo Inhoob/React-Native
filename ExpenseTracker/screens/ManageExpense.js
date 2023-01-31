@@ -6,7 +6,7 @@ import GlobalStyles from "../constants/styles";
 import Button from "../UI/Button";
 import { ExpensesContext } from "../store/expenses-context";
 import ExpenseForm from "../components/MnageExpense/ExpenseForm";
-import { storeExpense } from "../util/http";
+import { storeExpense, updateExpense, deleteExpense } from "../util/http";
 function ManageExpense({ route, navigation }) {
   const expenseCtx = useContext(ExpensesContext);
 
@@ -23,8 +23,9 @@ function ManageExpense({ route, navigation }) {
     });
   }, [navigation, isEditing]);
 
-  function deleteExpenseHandler() {
+  async function deleteExpenseHandler() {
     expenseCtx.deleteExpense(editedExpenseId);
+    await deleteExpense(editedExpenseId);
     navigation.goBack();
   }
 
@@ -33,8 +34,10 @@ function ManageExpense({ route, navigation }) {
   }
 
   async function confirmHandler(expenseData) {
+    //update 할 때에는 local을 업데이트 한 후 백엔드 업데이트 하면 되고 반대의 경우는 id를 먼저 얻어야하기 때문에 역순이 불가능
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
+      await updateExpense(editedExpenseId, expenseData);
     } else {
       const id = await storeExpense(expenseData);
       expenseCtx.addExpense({ ...expenseData, id: id });
