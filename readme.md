@@ -537,3 +537,21 @@ ManageExpense 화면이 떠 있을 때 RecentExpenses 화면이 백그라운드�
 ## navigation 사용 시 뒤로가기 버튼을 없애는법.
 
 navigation.navigate가 아닌 navigation.replace를 사용한다.
+
+## 인증 상태에 따라 화면 전환하기
+
+route protection(screen protection)
+특정 조건이 충족되지 않을 때 화면 전환을 막는 방법.
+즉, 로그인이 되지 않으면 welcome 화면을 볼 수 없도록.
+
+```
+function Navigation() {
+  const authCtx = useContext(AuthContext);
+  return (
+    <NavigationContainer>
+      {!authCtx.isAuthenticated && <AuthStack />}
+      {authCtx.isAuthenticated && <AuthenticatedStack />}
+    </NavigationContainer>
+  );
+}
+```
