@@ -501,3 +501,29 @@ const inputStyles = [styles.input];
 
 input 컴포넌트의 property로 value:amountValue 등으로 양방향바인딩을 해야 reset 등으로 초기화 할 수 있다.
 그 밖에 입력 양식(form) 에 관한 것은 ExpenseTracker의 ExpenseForm.js 컴포넌트 참조.
+
+## useEffect에서의 async/await
+
+```
+  useEffect(() => {
+    async function getExpenses() {
+      const expenses = await fetchExpenses();
+    }
+
+    getExpenses();
+  }, []);
+
+```
+
+fetchExpenses는 async함수이다. 이것은 promise를 return 한다는 것을 의미한다. 그렇기 때문에
+바로 fetchExpenses를 해주는 것이 아니라 async function에 한 번 더 담아준다. 그래야 useEffect가
+promise를 반환하지 않는다.
+
+## backend의 변경사항이 front에 바로 적용되지 않는 이슈
+
+ManageExpense 화면이 떠 있을 때 RecentExpenses 화면이 백그라운드에서 계속 실행되고 있다.
+즉 ManageExpense 화면이 닫히는 순간에 RecentExpenses 화면이 재실행 되지 않는다.
+이것은 Navigation의 주시(listen)를 사용하거나 Context를 사용한다. Context를 사용하면 쓸데없이
+다시 HTTP 요청을 보내지 않아도 된다.
+
+자세한 건 Section10의 164~166 강의를 참고할 것.
