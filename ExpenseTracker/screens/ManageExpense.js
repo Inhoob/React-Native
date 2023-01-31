@@ -8,8 +8,11 @@ import { ExpensesContext } from "../store/expenses-context";
 import ExpenseForm from "../components/MnageExpense/ExpenseForm";
 import { storeExpense, updateExpense, deleteExpense } from "../util/http";
 import LoadingOverlay from "../UI/LoadingOverlay";
+import ErrorOverlay from "../UI/ErrorOverlay";
 function ManageExpense({ route, navigation }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(false);
+
   const expenseCtx = useContext(ExpensesContext);
 
   const editedExpenseId = route.params?.expenseId;
@@ -27,10 +30,15 @@ function ManageExpense({ route, navigation }) {
 
   async function deleteExpenseHandler() {
     setIsSubmitting(true);
-    expenseCtx.deleteExpense(editedExpenseId);
-    await deleteExpense(editedExpenseId);
+    try {
+      expenseCtx.deleteExpense(editedExpenseId);
+      await deleteExpense(editedExpenseId);
+      navigation.goBack();
+    } catch (error) {
+      setError("Couldnot delete expense - try again later!!");
+      setIsSubmitting(false);
+    }
     // setIsSubmitting(false) //이건 어차피 뒤로가기하면 true가 되기때문에 불필요
-    navigation.goBack();
   }
 
   function cancelHandler() {
@@ -40,14 +48,27 @@ function ManageExpense({ route, navigation }) {
   async function confirmHandler(expenseData) {
     setIsSubmitting(true);
     //update 할 때에는 local을 업데이트 한 후 백엔드 업데이트 하면 되고 반대의 경우는 id를 먼저 얻어야하기 때문에 역순이 불가능
-    if (isEditing) {
-      expenseCtx.updateExpense(editedExpenseId, expenseData);
-      await updateExpense(editedExpenseId, expenseData);
-    } else {
-      const id = await storeExpense(expenseData);
-      expenseCtx.addExpense({ ...expenseData, id: id });
+    try {
+      if (isEditing) {
+        expenseCtx.updateExpense(editedExpenseId, expenseData);
+        await updateExpense(editedExpenseId, expenseData);
+      } else {
+        const id = await storeExpense(expenseData);
+        expenseCtx.addExpense({ ...expenseData, id: id });
+      }
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not save data - try again later!!");
+      setIsSubmitting(false);
     }
-    navigation.goBack();
+  }
+
+  function errorHandler() {
+    setError(null);
+  }
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} onConfirm={errorHandler} />;
   }
 
   if (isSubmitting) {
